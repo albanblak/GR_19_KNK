@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import pwm.controllers.partials.*?>
+
+<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="350.0" spacing="15.0" stylesheets="@../../resources/styles/app.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pwm.controllers.partials.AboutController">
+    <children>
+        <StackPane styleClass="about-card-img">
+            <children>
+                <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../resources/images/logo.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </StackPane>
+        <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="5.0" HBox.hgrow="ALWAYS">
+            <children>
+                <Label fx:id="appNameLabel" text="App Title" wrapText="true" />
+                <Label fx:id="versionLabel" text="Version: 1.0.1" wrapText="true" />
+                <Label fx:id="releasedLabel" text="Released: 13 Jan 2019" wrapText="true" />
+            </children>
+        </VBox>
+    </children>
+</HBox>

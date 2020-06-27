@@ -1,6 +1,7 @@
 package repositories;
 
 import com.mysql.jdbc.Connection;
+import components.ErrorPopupComponent;
 import models.User;
 import models.UserRole;
 import utils.DateHelper;
@@ -39,7 +40,10 @@ public class UserRepository {
         PreparedStatement stmt = DbHelper.getConnetion().prepareStatement("select  * from users where idusers = ? limit 1");
         stmt.setInt(1,id);
         ResultSet res = stmt.executeQuery();
-        res.next();
+       // res.next();
+        if(res.next() == false){
+            return null;
+        }
         return parseFromRes(res);
     }
 
@@ -49,6 +53,12 @@ public class UserRepository {
         stmt.setString(1,email);
         ResultSet res = stmt.executeQuery();
         res.next();
+
+        if(!res.next()){
+            return null;
+        }
+
+
         return parseFromRes(res);
     }
 
@@ -80,7 +90,7 @@ public class UserRepository {
         stmt.setString(3, model.getPassword());
         stmt.setString(4, model.getSalt());
         stmt.setString(5, model.getRole() == UserRole.Admin ? "A" : "E");
-        stmt.setInt(6, model.getActive() ? 1 : 0);
+        stmt.setInt(7, model.getActive() ? 1 : 0);
         stmt.setInt(7, model.getId());
 
         if (stmt.executeUpdate() != 1)
@@ -99,17 +109,23 @@ public class UserRepository {
 
 
 
-    private static User parseFromRes(ResultSet res) throws  Exception{
-        int id = res.getInt("idusers");
-        String name = res.getString("uname");
-        String email = res.getString("email");
-        String password = res.getString("password");
-        String salt = res.getString("salt");
-        UserRole role = res.getString("role").equals("A") ? UserRole.Admin : UserRole.Employee;
-        boolean active = res.getInt("active") == 1;
-        Date createdAt = DateHelper.fromSql(res.getString("createdAt"));
-        Date updatedAt = DateHelper.fromSql(res.getString("updatedAt"));
-        return new User(id,name,email,password,salt,role,active,createdAt,updatedAt);
+    private static User parseFromRes(ResultSet res) {
+        try{
+
+            int id = res.getInt("idusers");
+            String name = res.getString("uname");
+            String email = res.getString("email");
+            String password = res.getString("password");
+            String salt = res.getString("salt");
+            UserRole role = res.getString("role").equals("A") ? UserRole.Admin : UserRole.Employee;
+            boolean active = res.getInt("active") == 1;
+            Date createdAt = DateHelper.fromSql(res.getString("createdAt"));
+            Date updatedAt = DateHelper.fromSql(res.getString("updatedAt"));
+            return new User(id,name,email,password,salt,role,active,createdAt,updatedAt);
+        }catch (Exception e){
+            ErrorPopupComponent.show(e);
+            return  null;
+        }
     }
 
 }

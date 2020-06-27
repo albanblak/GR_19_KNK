@@ -1,15 +1,23 @@
 package controllers;
 
+import com.sun.glass.ui.EventLoop;
 import components.ErrorPopupComponent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 import javafx.event.ActionEvent;
+import javafx.stage.Stage;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -17,6 +25,8 @@ public class MainController implements Initializable {
 
     @FXML
     private VBox contentPane;
+    @FXML
+    private Label label;
 
     public final String STUDENT_LIST_VIEW = "student-list";
     public final String STUDENT_DETAILS_VIEW = "student-details";
@@ -31,6 +41,7 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        label.setText("hello");
     }
 
 
@@ -77,6 +88,34 @@ public class MainController implements Initializable {
         try {
            this.setView(USERS_LIST_VIEW);
         }catch (Exception e){
+            ErrorPopupComponent.show(e);
+        }
+   }
+
+   @FXML
+   private void onExitButtonMenuClick(ActionEvent event){
+        try {
+            Stage primaryStage = (Stage)label.getScene().getWindow();
+            primaryStage.close();
+        }catch (Exception e){
+            ErrorPopupComponent.show(e);
+        }
+   }
+
+   @FXML
+   private  void onLogoutButtonNavClick(ActionEvent event){
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource(viewPath("login")));
+            Scene scene  = new Scene(root);
+            Stage primaryStage = null;
+            if(event.getSource() instanceof MenuItem){
+                primaryStage = (Stage)label.getScene().getWindow();
+            }else{
+                primaryStage =(Stage)((Node) event.getSource()).getScene().getWindow();
+            }
+            primaryStage.setScene(scene);
+        }
+        catch (Exception e){
             ErrorPopupComponent.show(e);
         }
    }

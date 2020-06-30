@@ -123,4 +123,44 @@ public class PunetoretListController extends  ChildController implements Initial
             ErrorPopupComponent.show(e);
         }
     }
+
+
+
+    @FXML
+    public void onEditMenuItemClick(ActionEvent event) {
+        System.out.println("bravo");
+        Punetoret selectd = tableView.getSelectionModel().getSelectedItem();
+        if(selectd == null)
+            return;
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("../views/" + MainController.PUNETORET_DETAILS_VIEW+".fxml"));
+            Pane pane = loader.load();
+
+            PunetoretDetailsController controller = loader.getController();
+            controller.setModel(selectd);
+            controller.setEditable(true);
+
+            parentController.setView(MainController.PUNETORET_DETAILS_VIEW,pane,controller);
+
+        }catch (Exception e){
+            ErrorPopupComponent.show(e);
+        }
+    }
+
+
+    @FXML
+    private void onRemoveMenuItemClick(ActionEvent event){
+      System.out.println("preke");
+      try{
+          Punetoret selected = tableView.getSelectionModel().getSelectedItem();
+          if(selected == null) {
+              System.out.println("nul");
+              return;
+          }
+          PunetoretRepository.remove(selected.getId());
+      } catch (Exception e) {
+          e.printStackTrace();
+      }
+    }
 }

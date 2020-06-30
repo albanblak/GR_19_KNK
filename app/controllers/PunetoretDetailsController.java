@@ -11,6 +11,7 @@ import models.Student;
 import models.view.PunetoretViewModel;
 import models.view.StudentViewModel;
 import repositories.PunetoretRepository;
+import repositories.StudentRepository;
 import utils.DateHelper;
 import utils.Util;
 
@@ -59,6 +60,20 @@ public class PunetoretDetailsController extends ChildController implements Initi
 
     @FXML
     private void onSaveButtonClick(ActionEvent event){
+        try{
+            if(viewModel.getId() > 0 ){
+                PunetoretRepository.update(viewModel.getModel());
+            }else{
+                PunetoretRepository.create(viewModel.getModel());
+            }
+            parentController.setView(MainController.PUNETORET_LIST_VIEW);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+  /*  @FXML
+    private void onSaveButtonClick(ActionEvent event){
         try {
         if(viewModel.getId() > 0){
             PunetoretRepository.update(viewModel.getModel());
@@ -69,7 +84,7 @@ public class PunetoretDetailsController extends ChildController implements Initi
         }catch (Exception e){
             ErrorPopupComponent.show(e);
         }
-    }
+    }*/
 
 
     public void setModel (Punetoret model){
@@ -78,6 +93,7 @@ public class PunetoretDetailsController extends ChildController implements Initi
         emriField.setText(viewModel.getEmri());
         mbiemriField.setText(viewModel.getMbiemri());
         ditelindjaField.setText(DateHelper.toSqlFormat(viewModel.getDitelindja()));
+        //roliField.setText(viewModel.getRoli().toString());
         if(viewModel.getRoli() == PunetoretRole.Teknik){
             roliField.setText("Teknik");
         }else if(viewModel.getRoli() == PunetoretRole.Recepsionist){
@@ -116,17 +132,18 @@ public class PunetoretDetailsController extends ChildController implements Initi
     }
 
 
+
     public void setEditable(boolean value){
         isEditable = value;
-        idField.setDisable(!isEditable);
+        idField.setDisable(false);
         emriField.setDisable(!isEditable);
         mbiemriField.setDisable(!isEditable);
         ditelindjaField.setDisable(!isEditable);
         emailField.setDisable(!isEditable);
         telField.setDisable(!isEditable);
-        roliField.setDisable(!isEditable);
+        roliField.setDisable(false);
         vendiField.setDisable(!isEditable);
-        regjistruarField.setDisable(!isEditable);
+        regjistruarField.setDisable(false);
 
     }
 }

@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
+import models.Punetoret;
 import models.Student;
 
 import java.net.URL;
@@ -86,13 +87,23 @@ public class MainController implements Initializable {
 
    @FXML
    private void onPuntetoretMenuClick(ActionEvent event){
-        try {
-            this.setView(PUNETORET_DETAILS_VIEW);
 
-        }catch (Exception e){
-            ErrorPopupComponent.show(e);
-        }
-   }
+       try{
+           FXMLLoader loader = new FXMLLoader();
+           loader.setLocation(getClass().getResource(viewPath(PUNETORET_DETAILS_VIEW)));
+           Pane pane1 = loader.load();
+
+           PunetoretDetailsController controller = loader.getController();
+           controller.setModel(new Punetoret());
+           controller.setEditable(true);
+
+           this.setView(PUNETORET_DETAILS_VIEW,pane1,controller);
+
+       }catch (Exception e){
+           ErrorPopupComponent.show(e);
+       }}
+
+
 
    @FXML
    private void onUsersMenuClick(ActionEvent event){

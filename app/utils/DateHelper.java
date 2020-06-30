@@ -12,4 +12,8 @@ public class DateHelper {
         return new SimpleDateFormat("yyyy-MM-dd hh:mm:dd").format(date);
     }
 
+    public static String toSql(Date date ){
+        return  new SimpleDateFormat("dd-MM-yyyy").format(date);
+    }
+
 }

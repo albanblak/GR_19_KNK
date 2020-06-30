@@ -57,8 +57,8 @@
                      </image>
                   </ImageView>
                   <Label text="Regjistruar" GridPane.rowIndex="11" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Save" GridPane.columnIndex="1" GridPane.rowIndex="13" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Cancel" GridPane.columnIndex="2" GridPane.rowIndex="13" />
+                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSaveButtonClick" text="Save" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCancelButtonCLick" text="Cancel" GridPane.columnIndex="2" GridPane.rowIndex="13" />
                   <TextField fx:id="regjistruarField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="11" />
                   <Label text="Tel" GridPane.rowIndex="6" />
                   <Label text="Email" GridPane.rowIndex="7" />

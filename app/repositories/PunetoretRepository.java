@@ -37,24 +37,19 @@ public class PunetoretRepository {
     }
 
     public static Punetoret create(Punetoret model) throws Exception{
-        String query = "Insert into punetoret (pemri,pmbiemri,proli,ptel,pemail,pvendi) values(?,?,?,?,?,?)";
+        String query = "Insert into punetoret (pemri,pmbiemri,ditelinda,proli,ptel,pemail,pvendi) values(?,?,?,?,?,?,?)";
         PreparedStatement stmt = DbHelper.getConnetion().prepareStatement(query);
         stmt.setString(1,model.getEmri());
         stmt.setString(2,model.getMbiemri());
-        if(model.getRoli().equals(PunetoretRole.Teknik)){
-            stmt.setString(3,"pteknik");
-        }else if(model.getRoli().equals(PunetoretRole.Recepsionist)){
-            stmt.setString(3,"recepsionist");
-        }else if(model.getRoli().equals(PunetoretRole.Shef)){
-            stmt.setString(3,"shef");
-        }else if(model.getRoli().equals(PunetoretRole.Referent)){
-            stmt.setString(3,"refernent");
-        }else{
-            stmt.setString(3,"refernent");
-        }
-        stmt.setInt(4,model.getTel());
-        stmt.setString(5,model.getEmail());
-        stmt.setString(6,model.getVendi());
+        stmt.setString(3,DateHelper.toSqlFormat(model.getDitelindja()));
+        stmt.setString(4,retRoli(model.getRoli()));
+
+
+
+
+        stmt.setInt(5,model.getTel());
+        stmt.setString(6,model.getEmail());
+        stmt.setString(7,model.getVendi());
 
         if(stmt.executeUpdate() != 1){
             throw new Exception("ERR_NO_ROW_CHANGE");
@@ -71,20 +66,27 @@ public class PunetoretRepository {
 
 
     public static Punetoret update (Punetoret model) throws Exception{
-        String query = "Update student set semri = ? , smbiemri = ?, ditelindja = ?, semail = ?, stel = ?, vendi = ?,foto = ? where idpunetoret = ?";
-        PreparedStatement stmt = DbHelper.getConnetion().prepareStatement(query);
-        stmt.setString(1, model.getEmri());
-        stmt.setString(2,model.getMbiemri());
-        stmt.setString(3,DateHelper.toSqlFormat(model.getDitelindja()));
-        stmt.setString(4,model.getEmail());
-        stmt.setInt(5,model.getTel());
-        stmt.setString(6,model.getVendi());
-        stmt.setString(7,model.getFoto());
-        stmt.setInt(8,model.getId());
-        if (stmt.executeUpdate() != 1)
-            throw new Exception("ERR_NO_ROW_CHANGE");
+        try {
 
-        return find(model.getEmail());
+            String query = "Update punetoret set pemri = ? , pmbiemri = ?, ditelinda = ?, proli = ?,pemail = ?, ptel = ?, pvendi = ?,pfoto = ? where idpunetoret = ?";
+            PreparedStatement stmt = DbHelper.getConnetion().prepareStatement(query);
+            stmt.setString(1, model.getEmri());
+            stmt.setString(2,model.getMbiemri());
+            stmt.setString(3,DateHelper.toSqlFormat(model.getDitelindja()));
+            stmt.setString(4,retRoli(model.getRoli()));
+            stmt.setString(5,model.getEmail());
+            stmt.setInt(6,model.getTel());
+            stmt.setString(7,model.getVendi());
+            stmt.setString(8,model.getFoto());
+            stmt.setInt(9,model.getId());
+        if (stmt.executeUpdate() != 1)
+               throw new Exception("ERR_NO_ROW_CHANGE");
+
+            return find(model.getEmail());
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
 
@@ -105,6 +107,13 @@ public class PunetoretRepository {
 
     }
 
+    public static boolean remove(int id) throws Exception {
+        String query = "DELETE FROM punetoret WHERE idpunetoret = ?";
+        PreparedStatement stmt = DbHelper.getConnetion().prepareStatement(query);
+        stmt.setInt(1, id);
+        return stmt.executeUpdate() == 1;
+    }
+
 
 
 
@@ -114,16 +123,18 @@ public class PunetoretRepository {
            String emri = res.getString("pemri");
            String mbiemri = res.getString("pmbiemri");
            Date ditelindja = res.getDate("ditelinda");
-            PunetoretRole roli = null;
-            if(res.getString("proli").equals("pteknik")){
+           PunetoretRole roli;
+          if(res.getString("proli").equals("Teknik")){
                 roli = PunetoretRole.Teknik;
-            }else if(res.getString("proli").equals("recepsionist") ){
+            }else if(res.getString("proli").equals("Recepsionist") ){
                 roli = PunetoretRole.Recepsionist;
-            }else if(res.getString("proli").equals("shef") ){
+            }else if(res.getString("proli").equals("Shef") ){
                 roli = PunetoretRole.Shef;
-            }else if(res.getString("proli").equals("referent") ){
+            }else if(res.getString("proli").equals("Referent") ){
                 roli = PunetoretRole.Referent;
-            }
+            }else {
+              roli = null;
+          }
            int tel = res.getInt("ptel");
             String email = res.getString("pemail");
             String pvendi = res.getString("pvendi");
@@ -137,6 +148,19 @@ public class PunetoretRepository {
             return null;
         }
     }
+    private static String retRoli(PunetoretRole role){
+       if(role == PunetoretRole.Teknik){
+           return "Teknik";
+       } else if (role ==PunetoretRole.Referent) {
+           return "Referent";
+       }else if(role == PunetoretRole.Shef){
+           return "Shef";
+       }else if(role == PunetoretRole.Recepsionist){
+           return "Recepsionist";
+       }else{
+           return "";
+       }
 
+    }
 
 }

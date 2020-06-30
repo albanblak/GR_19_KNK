@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
+import models.Student;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -28,11 +29,12 @@ public class MainController implements Initializable {
     @FXML
     private Label label;
 
-    public final String STUDENT_LIST_VIEW = "student-list";
-    public final String STUDENT_DETAILS_VIEW = "student-details";
-    public final String PUNETORET_LIST_VIEW = "punetoret-list";
-    public final String PUNETORET_DETAILS_VIEW = "puntetoret-details";
-    public final String USERS_LIST_VIEW = "user-list";
+    public static  final String STUDENT_LIST_VIEW = "student-list";
+    public static final String STUDENT_DETAILS_VIEW = "student-details";
+    public static final String PUNETORET_LIST_VIEW = "punetoret-list";
+    public static final String PUNETORET_DETAILS_VIEW = "puntetoret-details";
+    public static final String USERS_LIST_VIEW = "user-list";
+    public static final String USERS_DETAILS_VIEW = "user-details";
 
 
     private static final String VIEW_PATH = "../views";
@@ -58,7 +60,16 @@ public class MainController implements Initializable {
    @FXML
    private void onStudentMenuClick(ActionEvent event){
         try{
-           this.setView(STUDENT_DETAILS_VIEW);
+          FXMLLoader loader = new FXMLLoader();
+          loader.setLocation(getClass().getResource(viewPath(STUDENT_DETAILS_VIEW)));
+          Pane pane1 = loader.load();
+
+          StudentDetailsController controller = loader.getController();
+          controller.setModel(new Student());
+          controller.setEditable(true);
+
+          this.setView(STUDENT_DETAILS_VIEW,pane1,controller);
+
         }catch (Exception e){
             ErrorPopupComponent.show(e);
         }
@@ -120,41 +131,99 @@ public class MainController implements Initializable {
         }
    }
 
+   @FXML
+   private void onInsertStudentClick(ActionEvent event){
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource(viewPath(STUDENT_DETAILS_VIEW)));
+
+            Pane pane = loader.load();
+            StudentDetailsController controller = loader.getController();
+            controller.setModel(new Student());
+            controller.setEditable(true);
+        }catch (Exception e){
+
+        }
+   }
+
 
     public void setView(String view) throws Exception {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource(viewPath(view)));
-        Pane pane = null;
+        Parent node = null ;
+        //Pane pane = null;
         switch (view) {
             case STUDENT_DETAILS_VIEW:
-                pane = loader.load();
+                loader.setLocation(getClass().getResource(viewPath(STUDENT_DETAILS_VIEW)));
+                node = loader.load();
                 contentPane.setAlignment(Pos.TOP_LEFT);
                 break;
             case STUDENT_LIST_VIEW:
-                pane = loader.load();
+                loader.setLocation(getClass().getResource(viewPath(STUDENT_LIST_VIEW)));
+                node = loader.load();
                 break;
             case PUNETORET_LIST_VIEW:
-                pane = loader.load();
+                loader.setLocation(getClass().getResource(viewPath(PUNETORET_LIST_VIEW)));
+                node = loader.load();
                 break;
             case PUNETORET_DETAILS_VIEW:
-                pane = loader.load();
+                loader.setLocation(getClass().getResource(viewPath(PUNETORET_DETAILS_VIEW)));
+                node = loader.load();
                 break;
             case USERS_LIST_VIEW:
-                pane = loader.load();
+                try{
+
+                    loader.setLocation(getClass().getResource(viewPath(USERS_LIST_VIEW)));
+                    System.out.println("e dej qitu o mire");
+                    node = loader.load();
+                    System.out.println("dej qitu o mire");
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 break;
             default:
+                System.out.println("hello");
                 throw new Exception("ERR_VIEW_NOT_FOUND");
-
-
         }
 
-       // ChildController controller = loader.getController();
-       // controller.setParentController(this);
+        ChildController controller = loader.getController();
+        setView(view,node,controller);
+    }
 
-        contentPane.getChildren().clear();
-        contentPane.getChildren().add(pane);
-        contentPane.setVgrow(pane, Priority.ALWAYS);
 
+    public void setView(String screen,Parent node, ChildController controller) throws Exception{
+        controller.setParentController(this);
+
+       contentPane.getChildren().clear();
+        contentPane.getChildren().add(node);
+       contentPane.setVgrow(node, Priority.ALWAYS);
+        switch (screen) {
+
+            case STUDENT_DETAILS_VIEW:
+                contentPane.setAlignment(Pos.TOP_CENTER);
+                break;
+            case PUNETORET_LIST_VIEW:
+                contentPane.setAlignment(Pos.TOP_LEFT);
+                break;
+           // case USERS_DETAILS_VIEW:
+            //    contentPane.setAlignment(Pos.TOP_CENTER);
+             //   break;
+            case STUDENT_LIST_VIEW:
+                contentPane.setAlignment(Pos.TOP_CENTER);
+                break;
+
+            case USERS_LIST_VIEW:
+                contentPane.setAlignment(Pos.TOP_CENTER);
+                break;
+
+            case USERS_DETAILS_VIEW:
+                contentPane.setAlignment(Pos.TOP_CENTER);
+                break;
+            case PUNETORET_DETAILS_VIEW:
+                contentPane.setAlignment(Pos.CENTER);
+                break;
+            default:
+                throw new Exception("ERR_SCREEN_NOT_FOUND");
+        }
 
     }
 

@@ -11,8 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox alignment="CENTER" minHeight="400.0" minWidth="600.0" prefHeight="525.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" minHeight="400.0" minWidth="600.0" prefHeight="525.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.StudentDetailsController">
    <children>
       <HBox alignment="CENTER" minHeight="400.0" minWidth="600.0" VBox.vgrow="ALWAYS">
          <children>
@@ -36,34 +35,40 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Label text="Id" />
                   <Label text="Emri" GridPane.rowIndex="1" />
                   <Label text="Mbiemri" GridPane.rowIndex="2" />
                   <Label text="Ditelindja" GridPane.rowIndex="3" />
-                  <Label text="Vendi" GridPane.rowIndex="4" />
-                  <Label text="Fk" GridPane.rowIndex="5" />
-                  <Label text="Dhoma" GridPane.rowIndex="6" />
-                  <Label text="Foto" GridPane.rowIndex="7" />
-                  <TextField GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-                  <TextField GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-                  <TextField GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
-                  <TextField GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4" />
-                  <TextField GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5" />
-                  <TextField GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6" />
-                  <TextField GridPane.columnIndex="1" GridPane.columnSpan="2" />
-                  <ImageView fitHeight="150.0" fitWidth="208.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7" GridPane.rowSpan="2">
+                  <Label text="Email" GridPane.rowIndex="4" />
+                  <Label text="Tel" GridPane.rowIndex="5" />
+                  <Label text="Fk" GridPane.rowIndex="6" />
+                  <Label text="Foto" GridPane.rowIndex="9" />
+                  <TextField fx:id="emriField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                  <TextField fx:id="mbiemriField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+                  <TextField fx:id="ditelindjaField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+                  <TextField fx:id="emailField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+                  <TextField fx:id="telField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+                  <TextField fx:id="fkField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6" />
+                  <TextField fx:id="idField" GridPane.columnIndex="1" GridPane.columnSpan="2" />
+                  <ImageView fx:id="fotoField" fitHeight="150.0" fitWidth="208.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="9" GridPane.rowSpan="2">
                      <image>
                         <Image url="@../resources/images/foto.png" />
                      </image>
                   </ImageView>
-                  <Label text="Created At" GridPane.rowIndex="10" />
-                  <Label text="Updated At" GridPane.rowIndex="11" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Add" GridPane.columnIndex="1" GridPane.rowIndex="12" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Cancel" GridPane.columnIndex="2" GridPane.rowIndex="12" />
-                  <TextField GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="10" />
-                  <TextField GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="11" />
+                  <Label text="Regjistruar" GridPane.rowIndex="12" />
+                  <Label text="Updated At" GridPane.rowIndex="13" />
+                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSaveButtonClick" text="Save" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCancelButtonClick" text="Cancel" GridPane.columnIndex="2" GridPane.rowIndex="14" />
+                  <TextField fx:id="regjistruarField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="12" />
+                  <TextField GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="13" />
+                  <Label text="Dhoma" GridPane.rowIndex="7" />
+                  <TextField fx:id="dhomaField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7" />
+                  <Label text="Vendi" GridPane.rowIndex="8" />
+                  <TextField fx:id="vendiField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="8" />
                </children>
             </GridPane>
          </children>

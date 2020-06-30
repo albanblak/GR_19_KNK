@@ -47,7 +47,7 @@
             <contextMenu>
                 <ContextMenu>
                     <items>
-                        <MenuItem fx:id="viewMenuItem" mnemonicParsing="false" text="View" />
+                        <MenuItem fx:id="viewMenuItem"  mnemonicParsing="false"  onAction="#onViewMenuItemClick" text="View" />
                         <MenuItem fx:id="editMenuItem" mnemonicParsing="false" text="Edit" />
                         <MenuItem fx:id="removeMenuItem" mnemonicParsing="false" text="Remove" />
                     </items>

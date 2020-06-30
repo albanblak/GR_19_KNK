@@ -3,6 +3,7 @@ package repositories;
 import components.ErrorPopupComponent;
 import models.Punetoret;
 import models.PunetoretRole;
+import models.Student;
 import utils.DateHelper;
 import utils.DbHelper;
 
@@ -69,6 +70,26 @@ public class PunetoretRepository {
 
 
 
+    public static Punetoret update (Punetoret model) throws Exception{
+        String query = "Update student set semri = ? , smbiemri = ?, ditelindja = ?, semail = ?, stel = ?, vendi = ?,foto = ? where idpunetoret = ?";
+        PreparedStatement stmt = DbHelper.getConnetion().prepareStatement(query);
+        stmt.setString(1, model.getEmri());
+        stmt.setString(2,model.getMbiemri());
+        stmt.setString(3,DateHelper.toSqlFormat(model.getDitelindja()));
+        stmt.setString(4,model.getEmail());
+        stmt.setInt(5,model.getTel());
+        stmt.setString(6,model.getVendi());
+        stmt.setString(7,model.getFoto());
+        stmt.setInt(8,model.getId());
+        if (stmt.executeUpdate() != 1)
+            throw new Exception("ERR_NO_ROW_CHANGE");
+
+        return find(model.getEmail());
+    }
+
+
+
+
 
     public static List<Punetoret> list(int page, int perPage) throws Exception{
         ArrayList<Punetoret> list = new ArrayList<>();
@@ -92,6 +113,7 @@ public class PunetoretRepository {
            int id = res.getInt("idpunetoret");
            String emri = res.getString("pemri");
            String mbiemri = res.getString("pmbiemri");
+           Date ditelindja = res.getDate("ditelinda");
             PunetoretRole roli = null;
             if(res.getString("proli").equals("pteknik")){
                 roli = PunetoretRole.Teknik;
@@ -108,7 +130,7 @@ public class PunetoretRepository {
             Date krijuar = DateHelper.fromSql(res.getString("pkrijuar"));
             String foto = res.getString("pfoto");
 
-            return new Punetoret(id,emri,mbiemri,roli,tel,email,pvendi,krijuar,foto);
+            return new Punetoret(id,emri,mbiemri,ditelindja,roli,tel,email,pvendi,krijuar,foto);
 
         }catch (Exception e){
             ErrorPopupComponent.show(e);

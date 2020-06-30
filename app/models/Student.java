@@ -7,6 +7,7 @@ public class Student {
     private int id;
     private String emri;
     private String mbiemri;
+    private Date ditelindja;
     private String email;
     private int tel;
     private String fk;
@@ -16,15 +17,16 @@ public class Student {
     private String foto;
 
     public Student(){
-        this(-1,"","","",-1,"",-1,"",new Date(),"");
+        this(-1,"","",new Date(),"",-1,"",-1,"",new Date(),"");
     }
 
-    public Student(int id, String emri,String mbiemri,String email,
+    public Student(int id, String emri,String mbiemri,Date ditelindja,String email,
                    int tel, String fk,int dhoma,String vendi,
                    Date regjistruar,String foto){
         this.id = id;
         this.emri = emri;
         this.mbiemri = mbiemri;
+        this.ditelindja = ditelindja;
         this.email = email;
         this.tel = tel;
         this.fk = fk;
@@ -52,6 +54,13 @@ public class Student {
 
     public void setMbiemri(String mbiemri){
         this.mbiemri = mbiemri;
+    }
+    public Date getDitelindja(){
+        return this.ditelindja;
+    }
+
+    public void setDitelindja(Date ditelindja){
+        this.ditelindja = ditelindja;
     }
 
     public String getEmail(){

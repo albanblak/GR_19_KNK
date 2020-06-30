@@ -9,30 +9,34 @@ public class Punetoret {
     private String emri;
     private String mbiemri;
     private PunetoretRole roli;
+    private Date ditelindja;
     private int tel;
     private String email;
     private String vendi;
-    private Date krijuar;
+    private Date regjistruar;
     private String foto;
 
 
     public Punetoret(){
-        this(-1,"","",PunetoretRole.Teknik,-1,"","",new Date(),"");
+        this(-1,"","",new Date(),PunetoretRole.Teknik,-1,"","",new Date(),"");
     }
 
-    public Punetoret(int id, String emri,String mbiemri,PunetoretRole roli,
+    public Punetoret(int id, String emri,String mbiemri,Date ditelindja,PunetoretRole roli,
                      int tel, String email,String vendi,
-                      Date krijuar,String foto){
+                      Date regjistruar,String foto){
         this.id = id;
         this.emri = emri;
         this.mbiemri = mbiemri;
+        this.ditelindja = ditelindja;
         this.roli = roli;
         this.tel = tel;
         this.email = email;
         this.vendi = vendi;
-        this.krijuar = krijuar;
+        this.regjistruar = regjistruar;
         this.foto = foto;
     }
+
+
 
     public int getId(){
         return this.id;
@@ -52,6 +56,14 @@ public class Punetoret {
 
     public void setMbiemri(String mbiemri){
         this.mbiemri = mbiemri;
+    }
+
+    public Date getDitelindja(){
+        return ditelindja;
+    }
+
+    public void setDitelindja(Date date){
+        this.ditelindja = date;
     }
 
     public PunetoretRole getRoli(){
@@ -87,8 +99,8 @@ public class Punetoret {
     }
 
 
-    public Date getKrijuar(){
-        return this.krijuar;
+    public Date getRegjistruar(){
+        return this.regjistruar;
     }
 
     public String getFoto(){
